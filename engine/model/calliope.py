@@ -1,13 +1,8 @@
-from abc import ABC
-from car import Car
+from datetime import datetime
+from engine.capulet_engine import CapuletEngine
 
 
-class CapuletEngine(Car, ABC):
-    def __init__(self, last_service_date, current_mileage, last_service_mileage):
-        super().__init__(last_service_date)
-        self.current_mileage = current_mileage
-        self.last_service_mileage = last_service_mileage
-
-    def engine_should_be_serviced(self):
-        mileage_threshold = 30000
-        return self.current_mileage - self.last_service_mileage > mileage_threshold
+class Calliope(CapuletEngine):
+    def needs_service(self):
+        service_threshold_date = self.last_service_date.replace(year=self.last_service_date.year + 2)
+        return service_threshold_date < datetime.today().date() or self.engine_should_be_serviced()
